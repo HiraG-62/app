@@ -3,7 +3,6 @@ const router = express.Router();
 const passport = require('passport')
 
 router.get('/', function (req, res, next) {
-    console.log(req.body.email);
     const isAuth = req.isAuthenticated();
     res.render('signin', {
         title: 'Sign in',
