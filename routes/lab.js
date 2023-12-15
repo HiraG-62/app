@@ -7,11 +7,13 @@ router.get('/', function (req, res, next) {
   
     if (isAuth) {
       const userId = req.user.id;
+      console.log(req.user)
       knex('posts')
         .select('*')
         .where({user_id: userId})
         .then(function (results) {
-          res.render('mypage', {
+          console.log(results);
+          res.render('lab', {
             title: 'Leaf',
             userId: userId,
             posts: results,

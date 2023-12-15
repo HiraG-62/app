@@ -25,6 +25,8 @@ router.get('/', function (req, res, next) {
         console.error(err);
         res.render('index', {
           title: 'Leaf',
+          userId: userId,
+          posts: results,
           isAuth: isAuth,
         })
       })
@@ -32,7 +34,7 @@ router.get('/', function (req, res, next) {
     res.render('index', {
       title: 'Leaf',
       isAuth: isAuth,
-    });
+    })
   }
 });
 
@@ -40,7 +42,6 @@ router.post('/', function (req, res, next) {
   const isAuth = req.isAuthenticated();
   const userId = req.user.id;
   const post = req.body.add;
-  console.log(userId);
 
   knex('posts')
     .insert({ user_id: userId, content: post })
@@ -51,6 +52,8 @@ router.post('/', function (req, res, next) {
       console.error(err);
       res.render('index', {
         title: 'Leaf',
+        userId: userId,
+        posts: results,
         isAuth: isAuth,
       })
     })
@@ -60,5 +63,7 @@ router.use('/signup', require('./signup'));
 router.use('/signin', require('./signin'));
 router.use('/logout', require('./logout'));
 router.use('/mypage', require('./mypage'));
+router.use('/lab', require('./lab'));
+router.use('/manage', require('./manage'));
 
 module.exports = router;
