@@ -73,6 +73,7 @@ a {
   background-color: #EDEDED;
   transition: transform 0.3s ease-out, opacity 0.3s ease-out;
   display: block;
+  border: 2px solid rgba(0, 0, 0, 0.2);
 }
 
 .nav_list {
@@ -100,7 +101,7 @@ a {
   margin-left: 20px;
   margin-right: 20px;
   padding: 10px;
-  bottom: 10px;
+  bottom: 30px;
   border-radius: 20px;
   text-align: center;
 }
@@ -255,6 +256,11 @@ input[name="addLab"], input[name="removeLab"] {
 
 #radio_remove:checked ~ .remove_lab {
   display: block;
+}
+
+.labs_list {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
 }
 
 .account_list {

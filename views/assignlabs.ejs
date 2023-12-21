@@ -47,11 +47,14 @@
                     </div>
                     <div class="remove_lab">
                       <form action="/manage/assignlabs" method="post">
-                        <% for(let [index, lab] of Object.entries(labs)) { %>
-                          <input type="checkbox" id="labCheck<%= index %>" name="lab_check" value="<%= lab.name %>">
-                          <label for="labCheck<%= index %>"><%= lab.name %></label>
-                        <% } %>
-                        <br>
+                        <div class="labs_list">
+                          <% for(let [index, lab] of Object.entries(labs)) { %>
+                            <div>
+                              <input type="checkbox" id="labCheck<%= index %>" name="lab_check" value="<%= lab.name %>">
+                              <label for="labCheck<%= index %>"><%= lab.name %></label>
+                            </div>
+                          <% } %>
+                        </div>
                         <input type="submit" name="removeLab" value="削除" class="redButton" />
                       </form>
                     </div>

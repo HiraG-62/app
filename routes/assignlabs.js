@@ -12,7 +12,6 @@ router.get('/', function (req, res, next) {
             knex('labs')
               .select('*')
               .then(function (labsResults) {
-                // console.log(labsResults);
                 res.render('assignlabs', {
                   title: 'Leaf',
                   users: usersResults,
@@ -106,33 +105,38 @@ router.post('/', function(req, res, next) {
   } else if(req.body.assignLab != undefined) {
     const assignMembers = req.body.assign_members;
     const labName = req.body.lab_name;
+    const labId = knex('labs').select('id').where({ 'name': labName })
+    console.log(labId.id)
 
     if(typeof(assignMembers) == 'object') {
       for(member of assignMembers) {
-        // knex('')
-        //   .where({ 'name': labName })
-        //   .update({ 'exist': 0 })
-        //   .then(function () {
-        //     res.redirect('/manage/assignlabs');
+        // knex('labs')
+        // .select('id')
+        // .where({ 'name': labName})
+        // .then(function (results) {
+        //   console.log('2' + member)
+        //   knex('users')
+        //     .where({ 'email': member })
+        //     .update({ 'lab_id': results[0].id })
+        //     .then(function () {
+        //       console.log('3' + member)
+        //     })
         //   })
-      }
+        }
+        res.redirect('/manage/assignlabs')
     } else if(typeof(assignMembers) == 'string') {
       knex('labs')
+        .select('id')
         .where({ 'name': labName})
-        .update({ 'exist': 0})
-        .then(function () {
-          res.redirect('/manage/assignlabs');
-        })
-      knex('users')
-        .select('*')
-        .where({ 'email': assignMembers, 'lab_id': null})
-        
         .then(function (results) {
-          
+          knex('users')
+            .where({ 'email': assignMembers })
+            .update({ 'lab_id': results[0].id })
+            .then(function () {
+              res.redirect('/manage/assignlabs')
+            })
         })
     }
-    console.log(req.body)
-    res.redirect('/manage/assignlabs')
   } else {
     res.redirect('/manage/assignlabs')
   }
