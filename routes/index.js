@@ -42,9 +42,11 @@ router.post('/', function (req, res, next) {
   const isAuth = req.isAuthenticated();
   const userId = req.user.id;
   const post = req.body.add;
+  console.log(userId);
+  console.log(post)
 
   knex('posts')
-    .insert({ user_id: userId, content: post })
+    .insert({ user_id: userId, contents: post })
     .then(function () {
       res.redirect('/');
     })

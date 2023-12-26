@@ -106,24 +106,14 @@ router.post('/', function(req, res, next) {
     const assignMembers = req.body.assign_members;
     const labName = req.body.lab_name;
     const labId = knex('labs').select('id').where({ 'name': labName })
-    console.log(labId.id)
 
     if(typeof(assignMembers) == 'object') {
       for(member of assignMembers) {
-        // knex('labs')
-        // .select('id')
-        // .where({ 'name': labName})
-        // .then(function (results) {
-        //   console.log('2' + member)
-        //   knex('users')
-        //     .where({ 'email': member })
-        //     .update({ 'lab_id': results[0].id })
-        //     .then(function () {
-        //       console.log('3' + member)
-        //     })
-        //   })
+        knex('users', 'labs')
+          .where({ 'users.email': member }, { 'labs.name': labName })
+          .update({ 'users.lab_id': labId })
+          .then()
         }
-        res.redirect('/manage/assignlabs')
     } else if(typeof(assignMembers) == 'string') {
       knex('labs')
         .select('id')
@@ -132,15 +122,13 @@ router.post('/', function(req, res, next) {
           knex('users')
             .where({ 'email': assignMembers })
             .update({ 'lab_id': results[0].id })
-            .then(function () {
-              res.redirect('/manage/assignlabs')
-            })
+            .then()
         })
     }
   } else {
-    res.redirect('/manage/assignlabs')
+
   }
-    
+  res.redirect('/manage/assignlabs');
 });
 
 module.exports = router;
