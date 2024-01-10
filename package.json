@@ -6,6 +6,10 @@
     "start": "node ./bin/www"
   },
   "dependencies": {
+    "@fullcalendar/core": "^6.1.10",
+    "@fullcalendar/daygrid": "^6.1.10",
+    "@fullcalendar/list": "^6.1.10",
+    "@fullcalendar/timegrid": "^6.1.10",
     "bcrypt": "^5.1.1",
     "connect-flash": "^0.1.1",
     "cookie-parser": "~1.4.4",
@@ -14,7 +18,9 @@
     "dotenv": "^16.3.1",
     "ejs": "~2.6.1",
     "express": "~4.16.1",
+    "fullcalendar": "^6.1.10",
     "http-errors": "~1.6.3",
+    "jquery": "^3.7.1",
     "knex": "^0.95.15",
     "morgan": "~1.9.1",
     "mysql": "^2.18.1",

@@ -4,13 +4,14 @@ const knex = require('../db/knex');
 
 router.get('/', function (req, res, next) {
     const isAuth = req.isAuthenticated();
+    console.log(req.user)
   
     if (isAuth) {
       const userId = req.user.id;
-      console.log(req.user)
+      const labId = req.user.lab_id;
       knex('posts')
         .select('*')
-        .where({user_id: userId})
+        .where({ 'lab_id': labId })
         .then(function (results) {
           console.log(results);
           res.render('lab', {

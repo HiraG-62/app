@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>
+    <%= title %>
+  </title>
+  <link type="text/css" rel='stylesheet' href='/public/stylesheets/style.css' />
+  <link type="text/css" rel='stylesheet' href='/public/stylesheets/reset.css' />
+  <link type="text/css" rel="stylesheet" href="/public/stylesheets/parts.css" />
+
+  <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js'></script>
+    <script>
+
+      document.addEventListener('DOMContentLoaded', function() {
+        var calendarEl = document.getElementById('calendar');
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+          initialView: 'dayGridMonth'
+        });
+        calendar.render();
+      });
+
+    </script>
+
+</head>
+
+<body>
+  <%- include('./error_messages'); %>
+  <% if(isAuth) { %>
+    <%- include('./header.ejs'); %>
+
+    <div class="main_wrapper">
+        <div id="calendar" style="width: 800px"></div>
+    </div>
+  <% } else { %>
+    <h1>Welcome to the Tech Log</h1>
+    <a href="/signin">Sign in now!</a>
+    <a href="/signup">Sign up if you're not registered yet!</a>
+  <% } %>
+</body>
+
+</html>

@@ -13,7 +13,6 @@ router.get('/', function (req, res, next) {
     knex('posts')
       .select('*')
       .then(function (results) {
-        console.log(results);
         res.render('index', {
           title: 'Leaf',
           userId: userId,
@@ -41,12 +40,11 @@ router.get('/', function (req, res, next) {
 router.post('/', function (req, res, next) {
   const isAuth = req.isAuthenticated();
   const userId = req.user.id;
+  const labId = req.user.lab_id;
   const post = req.body.add;
-  console.log(userId);
-  console.log(post)
 
   knex('posts')
-    .insert({ user_id: userId, contents: post })
+    .insert({ 'user_id': userId, 'lab_id': labId, 'contents': post })
     .then(function () {
       res.redirect('/');
     })
