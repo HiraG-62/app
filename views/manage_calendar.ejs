@@ -10,33 +10,243 @@
   <link type="text/css" rel="stylesheet" href="/public/stylesheets/parts.css" />
 
   <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js'></script>
-    <script>
+  <script>
+    let event = null;
+    let calendar;
 
-      document.addEventListener('DOMContentLoaded', function() {
-        var calendarEl = document.getElementById('calendar');
-        var calendar = new FullCalendar.Calendar(calendarEl, {
-          initialView: 'dayGridMonth'
-        });
-        calendar.render();
+    document.addEventListener('DOMContentLoaded', function () {
+
+      let containerEl = document.getElementById('external-events-list');
+      new FullCalendar.Draggable(containerEl, {
+        itemSelector: '.fc-event',
+        eventData: function (eventEl) {
+          return {
+            title: eventEl.innerText.trim()
+          }
+        }
       });
 
-    </script>
+      let calendarEl = document.getElementById('calendar');
+      calendar = new FullCalendar.Calendar(calendarEl, {
+        locale: 'ja',
+        initialView: 'timeGridWeek',
+        nowIndicator: true,
+        headerToolbar: {
+          left: 'prev,next today',
+          center: 'title',
+          right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+        },
+        buttonText: {
+          today: '今日',
+          month: '月',
+          week: '週',
+          day: '日',
+          list: 'リスト'
+        },
+        navLinks: true,
+        editable: true,
+        droppable: true,
+        selectable: true,
+        selectMirror: true,
+        dayMaxEvents: true,
+        slotDuration: '00:15:00',
+        slotLabelInterval: '01:00',
+
+        eventClick: function (arg) {
+          event = arg.event;
+
+          let popup = document.getElementById('popup');
+          popup.checked = true;
+          let createButton = document.getElementById('create');
+          createButton.style.display = 'none'
+          let deleteButton = document.getElementById('delete');
+          deleteButton.style.display = 'block'
+          let confirmButton = document.getElementById('confirm');
+          confirmButton.style.display = 'block'
+
+          let className = document.getElementById('class_name');
+          let classDate = document.getElementById('class_date');
+          let startTime = document.getElementById('start_time');
+          let endTime = document.getElementById('end_time');
+
+          let startTimeDate = new Date(event.startStr);
+          let endTimeDate = new Date(event.endStr);
+          let date = startTimeDate.getFullYear() + '-' + getDoubleDigit(startTimeDate.getMonth() + 1) + '-' + getDoubleDigit(startTimeDate.getDate());
+          let start = getDoubleDigit(startTimeDate.getHours()) + ':' + getDoubleDigit(startTimeDate.getMinutes());
+
+          if (endTimeDate == 'Invalid Date') {
+            endTimeDate = startTimeDate;
+            endTimeDate.setMinutes(endTimeDate.getMinutes() + 60);
+          }
+          end = getDoubleDigit(endTimeDate.getHours()) + ':' + getDoubleDigit(endTimeDate.getMinutes());
+
+          className.value = event.title;
+          classDate.value = date;
+          startTime.value = start;
+          endTime.value = end
+
+        },
+
+        select: function (arg) {
+          event = arg.event;
+
+          let popup = document.getElementById('popup');
+          popup.checked = true;
+          let confirmButton = document.getElementById('confirm');
+          confirmButton.style.display = 'none'
+          let deleteButton = document.getElementById('delete');
+          deleteButton.style.display = 'none'
+          let createButton = document.getElementById('create');
+          createButton.style.display = 'block'
+          let req = document.getElementById('req');
+          req.style.display = 'none';
+
+          let className = document.getElementById('class_name');
+          let classDate = document.getElementById('class_date');
+          let startTime = document.getElementById('start_time');
+          let endTime = document.getElementById('end_time');
+
+          let startTimeDate = new Date(arg.startStr);
+          let endTimeDate = new Date(arg.endStr);
+          let date = startTimeDate.getFullYear() + '-' + getDoubleDigit(startTimeDate.getMonth() + 1) + '-' + getDoubleDigit(startTimeDate.getDate());
+          let start = getDoubleDigit(startTimeDate.getHours()) + ':' + getDoubleDigit(startTimeDate.getMinutes());
+
+          if (endTimeDate == 'Invalid Date') {
+            endTimeDate = startTimeDate;
+            endTimeDate.setMinutes(endTimeDate.getMinutes() + 60);
+          }
+          end = getDoubleDigit(endTimeDate.getHours()) + ':' + getDoubleDigit(endTimeDate.getMinutes());
+
+          className.value = '';
+          classDate.value = date;
+          startTime.value = start;
+          endTime.value = end
+
+
+        }
+
+      });
+
+      calendar.render();
+
+    });
+
+
+    //Functions
+
+    function getDoubleDigit(num) {
+      return ('0' + num).slice(-2);
+    }
+
+
+    //Click Events
+
+    function deleteEventClick() {
+      event.remove();
+
+      let popup = document.getElementById('popup');
+      popup.checked = false;
+    }
+
+    function confirmEventClick() {
+      let className = document.getElementById('class_name');
+      let classDate = document.getElementById('class_date');
+      let startTime = document.getElementById('start_time');
+      let endTime = document.getElementById('end_time');
+
+      event.setProp('title', className.value);
+      event.setDates(classDate.value + 'T' + startTime.value + ':00', classDate.value + 'T' + endTime.value + ':00');
+
+      let popup = document.getElementById('popup');
+      popup.checked = false;
+    }
+
+    function createEventClick() {
+      let className = document.getElementById('class_name');
+      let classDate = document.getElementById('class_date');
+      let startTime = document.getElementById('start_time');
+      let endTime = document.getElementById('end_time');
+      let req = document.getElementById('req');
+
+      if(className.value == '') {
+        req.style.display = 'inline'
+        return;
+      }
+
+      calendar.addEvent({
+        title: className.value,
+        start: classDate.value + 'T' + startTime.value + ':00',
+        end: classDate.value + 'T' + endTime.value + ':00',
+      })
+
+      let popup = document.getElementById('popup');
+      popup.checked = false;
+    }
+
+  </script>
 
 </head>
 
 <body>
   <%- include('./error_messages'); %>
-  <% if(isAuth) { %>
-    <%- include('./header.ejs'); %>
+    <% if(isAuth) { %>
+      <%- include('./header.ejs'); %>
 
-    <div class="main_wrapper">
-        <div id="calendar" style="width: 800px"></div>
-    </div>
-  <% } else { %>
-    <h1>Welcome to the Tech Log</h1>
-    <a href="/signin">Sign in now!</a>
-    <a href="/signup">Sign up if you're not registered yet!</a>
-  <% } %>
+        <div class="calendar_wrapper">
+
+          <div id="calendar"></div>
+
+          <input type="checkbox" id="popup">
+          <div class="popup_overlay">
+            <div class="popup_window">
+
+              <div>
+                <label>科目名<input type="text" id="class_name"></label>
+                <span id="req" style="color: red;">※</span>
+                <br>
+                <label>日時<input type="date" id="class_date"></label>
+                <br>
+                <label>授業時刻 <input type="time" id="start_time" style="width: 100px;"> ～ <input type="time" id="end_time"
+                    width="50px" style="width: 100px;"></label>
+
+              </div>
+
+              <div class="buttons">
+                <div class="greenButton" id="confirm" style="width: fit-content; margin: 10px 0 0 0"
+                  onclick="confirmEventClick()">確定</div>
+                <div class="greenButton" id="create" style="width: fit-content; margin: 10px 0 0 0"
+                  onclick="createEventClick()">作成</div>
+                <div class="redButton" id="delete" style="width: fit-content; margin: 10px 0 0 auto;" onclick="deleteEventClick()">
+                  削除</div>
+              </div>
+
+              <label class="popup_close" for="popup">
+                <svg width="18" height="18" xmlns="http://www.w3.org/2000/svg">
+                  <line x1="0" y1="0" x2="18" y2="18" stroke="white" stroke-width="3"></line>
+                  <line x1="0" y1="18" x2="18" y2="0" stroke="white" stroke-width="3"></line>
+                </svg>
+              </label>
+            </div>
+          </div>
+
+          <div id='external-events'>
+            <h4>授業一覧</h4>
+
+            <div id='external-events-list'>
+              <% for(let i = 0;i < 3;i++) { %>
+                <div class='fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event'>
+                  <div class='fc-event-main'>test<%=i%></div>
+                </div>
+              <% } %>
+            </div>
+          </div>
+
+        </div>
+        <% } else { %>
+          <h1>Welcome to the Tech Log</h1>
+          <a href="/signin">Sign in now!</a>
+          <a href="/signup">Sign up if you're not registered yet!</a>
+        <% } %>
 </body>
 
 </html>

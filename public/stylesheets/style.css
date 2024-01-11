@@ -19,7 +19,8 @@ form {
   width: 100%;
 }
 
-ul, li {
+ul,
+li {
   display: block;
   list-style: none;
 }
@@ -120,7 +121,7 @@ a {
 
 .main_wrapper {
   display: flex;
-  width: Min(80%,800px);
+  width: Min(80%, 800px);
   justify-content: center;
   height: calc(100vh - 72px);
   padding-top: 72px;
@@ -196,7 +197,7 @@ a {
   display: none;
 }
 
-#popup:checked ~ .popup_overlay {
+#popup:checked~.popup_overlay {
   display: block;
   z-index: 99999;
   background-color: #00000070;
@@ -234,27 +235,29 @@ a {
   right: 0;
 }
 
-.add_lab, .remove_lab {
+.add_lab,
+.remove_lab {
   margin: 10px;
 }
 
-input[name="addLab"], input[name="removeLab"] {
+input[name="addLab"],
+input[name="removeLab"] {
   margin-top: 10px;
 }
 
-#radio_add:checked ~ .add_lab {
+#radio_add:checked~.add_lab {
   display: block;
 }
 
-#radio_remove:checked ~ .add_lab {
+#radio_remove:checked~.add_lab {
   display: none;
 }
 
-#radio_add:checked ~ .remove_lab {
+#radio_add:checked~.remove_lab {
   display: none;
 }
 
-#radio_remove:checked ~ .remove_lab {
+#radio_remove:checked~.remove_lab {
   display: block;
 }
 
@@ -270,4 +273,46 @@ input[name="addLab"], input[name="removeLab"] {
 
 .account_check {
   padding: 10px;
+}
+
+.calendar_wrapper {
+  display: flex;
+  width: Min(70%, 1500px);
+  justify-content: center;
+  height: calc(100vh - 72px);
+  padding-top: 72px;
+}
+
+#external-events {
+  width: 10%;
+  height: fit-content;
+  background-color: #eee;
+  margin: 20px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 30px;
+}
+
+#calendar {
+  width: 70%;
+}
+
+.fc-event {
+  padding: 2%;
+  margin-bottom: 2px
+}
+
+.buttons {
+  display: flex;
+}
+
+td.fc-timegrid-slot.fc-timegrid-slot-label{
+  font-size: 0.35em;
+}
+/* slotのサイズ */
+td.fc-timegrid-slot.fc-timegrid-slot-lane.fc-timegrid-slot-minor{
+  font-size: 0.35em;
+}
+td.fc-timegrid-slot.fc-timegrid-slot-lane{
+  font-size: 0.35em;
 }
