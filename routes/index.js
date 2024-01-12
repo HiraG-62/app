@@ -37,6 +37,28 @@ router.get('/', function (req, res, next) {
   }
 });
 
+router.post('/content', function (req, res, next) {
+  const isAuth = req.isAuthenticated();
+  const userId = req.user.id;
+  const labId = req.user.lab_id;
+  const post = req.body.contents;
+
+  knex('posts')
+    .insert({ 'user_id': userId, 'lab_id': labId, 'contents': post })
+    .then(function () {
+      res.redirect('/');
+    })
+    .catch(function (err) {
+      console.error(err);
+      res.render('index', {
+        title: 'Leaf',
+        userId: userId,
+        posts: results,
+        isAuth: isAuth,
+      })
+    })
+});
+
 router.post('/', function (req, res, next) {
   const isAuth = req.isAuthenticated();
   const userId = req.user.id;

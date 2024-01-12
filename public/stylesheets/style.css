@@ -130,7 +130,8 @@ a {
 .main_body {
   box-sizing: border-box;
   display: flex;
-  flex-flow: column;
+  flex-direction: column;
+  justify-content: space-between;
   background-color: #EDEDED;
   width: 100%;
   height: 100%;
@@ -141,7 +142,8 @@ a {
 
 .post_area {
   width: 100%;
-  height: 750px;
+  max-height: 480px;
+  overflow-y: auto;
 }
 
 .writing_area {
@@ -150,6 +152,32 @@ a {
   width: 100%;
   padding-top: 20px;
   display: flex;
+}
+
+.form_area {
+  background-color: #EDEDED;
+  bottom: 0;
+  width: auto;
+}
+
+.writing_quill_area {
+  width: 100%;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  background-color: rgba(255, 255, 255, 0.8);
+}
+
+.ql-editor {
+  max-height: 35vh !important;
+  overflow-y: auto;
+}
+
+.ql-editor strong {
+  font-weight: bold;
+}
+
+.enter-area {
+  text-align: right;
+  padding: 10px;
 }
 
 .enter {

@@ -9,6 +9,8 @@
   <link type="text/css" rel='stylesheet' href='/public/stylesheets/reset.css' />
   <link type="text/css" rel="stylesheet" href="/public/stylesheets/parts.css" />
 
+  <link href="https://cdn.quilljs.com/1.3.7/quill.snow.css" rel="stylesheet">
+
 </head>
 
 <body>
@@ -20,25 +22,75 @@
       <div class="main_body">
         <div class="post_area">
           <% for(let post of posts) { %>
-              <% if(post.user_id == userId) { %>
-                  <li class="post my_post"><span><%= post.contents %></span></li>
-              <% } else { %>
-                  <li class="post others_post"><span><%= post.contents %></span></li>
-              <% } %>
+            <% if(post.user_id == userId) { %>
+              <li class="post my_post">
+                <div class="ql-snow">
+                  <div class="ql-editor"
+                    style="white-space: normal; padding: 5px 5px;">
+                    <%- post.contents %>
+                  </div>
+                </div>
+              </li>
+            <% } else { %>
+              <li class="post others_post">
+                <div class="ql-snow">
+                  <div class="ql-editor"
+                    style="white-space: normal; padding: 5px 5px;">
+                    <%- post.contents %>
+                  </div>
+                </div>
+              </li>
+            <% } %>
           <% } %>
         </div>
-        <form action="/" method="post">
-          <div class="writing_area">
-            <textarea required name="add" rows="1"></textarea>
-            <input type="submit" class="enter">
-          </div>
-        </form>
+        <div class="form_area">
+          <form action="/content" method="post" onsubmit="clickSubmit()">
+            <div class="writing_quill_area">
+              <textarea name="contents" style="display:none" id="contents"></textarea>
+              <div id="editor"></div>
+            </div>
+            <div class="enter-area">
+              <button type="submit" class="enter button button-icon redButton">送信</button>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   <% } else { %>
     <h1>Welcome to the Tech Log</h1>
     <a href="/signin">Sign in now!</a>
+    <a href="/signup">Sign up if you're not registered yet!</a>
   <% } %>
 </body>
+
+<script src="https://cdn.quilljs.com/1.3.7/quill.js"></script>
+<script src="https://cdn.quilljs.com/1.3.7/quill.min.js"></script>
+<script>
+  const toolbarOptions = [
+    ['bold', 'underline', 'strike'],        // toggled buttons
+    ['blockquote', 'code-block', 'link'],
+
+    [{ 'list': 'ordered' }, { 'list': 'bullet' }, { 'align': [] }],
+
+    [{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
+    [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+
+    [{ 'color': [] }, { 'background': [] }, { 'font': [] }],          // dropdown with defaults from theme
+    ['image']
+  ];
+  const quill = new Quill('#editor', {
+    theme: 'snow',
+    placeholder: 'Enterで改行しCtrl + Enterで投稿します。',
+    modules: {
+      toolbar: toolbarOptions,
+    }
+  });
+
+  function clickSubmit(){
+
+    document.getElementById('contents').value = quill.root.innerHTML;
+    document.form.submit();
+  }
+</script>
 
 </html>
