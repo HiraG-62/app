@@ -10,7 +10,13 @@
   <link type="text/css" rel="stylesheet" href="/public/stylesheets/parts.css" />
 
   <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js'></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/google-calendar@6.1.6/index.global.min.js"></script>
+  <script src="https://apis.google.com/js/api.js"></script>
+
   <script>
+    const API_KEY = 'AIzaSyCC0DWP5zRDHVeyj-VIhGAHriXoP6bigMY';
+    const CALENDAR_ID = 'hira6291gi@gmail.com'
+
     let event = null;
     let calendar;
 
@@ -51,6 +57,10 @@
         dayMaxEvents: true,
         slotDuration: '00:15:00',
         slotLabelInterval: '01:00',
+        googleCalendarApiKey: API_KEY,
+        events: {
+          googleCalendarId: CALENDAR_ID
+        },
 
         eventClick: function (arg) {
           event = arg.event;
@@ -98,8 +108,6 @@
           deleteButton.style.display = 'none'
           let createButton = document.getElementById('create');
           createButton.style.display = 'block'
-          let req = document.getElementById('req');
-          req.style.display = 'none';
 
           let className = document.getElementById('class_name');
           let classDate = document.getElementById('class_date');
@@ -123,19 +131,76 @@
           endTime.value = end
 
 
+        },
+
+        loading: async function (arg) {
+          // console.log(arg)
+          if (arg == true) return;
+
+          removeLink();
         }
 
       });
 
       calendar.render();
 
+      let fcButtons = document.getElementsByClassName('fc-button');
+      console.log(fcButtons.length)
+
+      for (let i = 0; i < fcButtons.length; i++) {
+        fcButtons[i].onclick = fcButtonClick;
+        console.log(fcButtons[i])
+      }
+
+
     });
+
+    //google api function
+    function start() {
+      gapi.client.init({
+        'apiKey': API_KEY,
+      }).then(function () {
+        return gapi.client.request({
+          'path': 'https://www.googleapis.com/calendar/v3/calendars/' + encodeURIComponent(CALENDAR_ID) + '/events'
+        })
+      }).then(function (response) {
+        let items = response.result.items;
+        for (let i = 0; i < items.length; i++) {
+          // console.log(items[i]);
+        }
+      }, function (reason) {
+        console.log('Error: ' + reason.result.error.message);
+      });
+    };
+
+    gapi.load('client', start);
 
 
     //Functions
 
     function getDoubleDigit(num) {
       return ('0' + num).slice(-2);
+    }
+
+    async function wait(ms) {
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          resolve();
+        }, ms)
+      });
+    }
+
+    async function removeLink() {
+      await wait(10);
+
+      let events = document.getElementById('calendar').getElementsByClassName('fc-event');
+
+      for (let i = 0; i < events.length; i++) {
+        events[i].addEventListener('click', function (e) {
+          e.preventDefault();
+        })
+
+      }
     }
 
 
@@ -147,6 +212,7 @@
       let popup = document.getElementById('popup');
       popup.checked = false;
     }
+
 
     function confirmEventClick() {
       let className = document.getElementById('class_name');
@@ -161,15 +227,20 @@
       popup.checked = false;
     }
 
+
+    function fcButtonClick() {
+      console.log('clicked')
+      removeLink();
+    }
+
+
     function createEventClick() {
       let className = document.getElementById('class_name');
       let classDate = document.getElementById('class_date');
       let startTime = document.getElementById('start_time');
       let endTime = document.getElementById('end_time');
-      let req = document.getElementById('req');
 
-      if(className.value == '') {
-        req.style.display = 'inline'
+      if (className.value == '') {
         return;
       }
 
@@ -202,7 +273,6 @@
 
               <div>
                 <label>科目名<input type="text" id="class_name"></label>
-                <span id="req" style="color: red;">※</span>
                 <br>
                 <label>日時<input type="date" id="class_date"></label>
                 <br>
@@ -216,7 +286,8 @@
                   onclick="confirmEventClick()">確定</div>
                 <div class="greenButton" id="create" style="width: fit-content; margin: 10px 0 0 0"
                   onclick="createEventClick()">作成</div>
-                <div class="redButton" id="delete" style="width: fit-content; margin: 10px 0 0 auto;" onclick="deleteEventClick()">
+                <div class="redButton" id="delete" style="width: fit-content; margin: 10px 0 0 auto;"
+                  onclick="deleteEventClick()">
                   削除</div>
               </div>
 
@@ -233,11 +304,12 @@
             <h4>授業一覧</h4>
 
             <div id='external-events-list'>
-              <% for(let i = 0;i < 3;i++) { %>
+              <% for(let i=0;i < 3;i++) { %>
                 <div class='fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event'>
-                  <div class='fc-event-main'>test<%=i%></div>
+                  <div class='fc-event-main'>test<%=i%>
+                  </div>
                 </div>
-              <% } %>
+                <% } %>
             </div>
           </div>
 
@@ -246,7 +318,8 @@
           <h1>Welcome to the Tech Log</h1>
           <a href="/signin">Sign in now!</a>
           <a href="/signup">Sign up if you're not registered yet!</a>
-        <% } %>
+          <% } %>
+
 </body>
 
 </html>
