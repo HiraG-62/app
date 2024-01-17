@@ -23,6 +23,6 @@ router.post('/', function(req, res, next) {
 });
 
 router.use('/assignlabs', require('./assignlabs'));
-router.use('/manage_calendar', require('./manage_calendar'));
+router.use('/manage_calendar', require('./manageCalendar'));
 
 module.exports = router;

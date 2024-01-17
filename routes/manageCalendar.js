@@ -5,7 +5,7 @@ const knex = require('../db/knex');
 router.get('/', function (req, res, next) {
     const isAuth = req.isAuthenticated();
 
-    res.render('manage_calendar', {
+    res.render('manageCalendar', {
         title: 'カレンダー設定',
         isAuth: isAuth,
     })
