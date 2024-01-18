@@ -15,52 +15,58 @@
 
 <body>
   <%- include('./error_messages'); %>
-  <% if(isAuth) { %>
-    <%- include('./header.ejs'); %>
+    <% if(isAuth) { %>
 
-    <div class="main_wrapper">
-      <div class="main_body">
-        <div class="post_area">
-          <% for(let post of posts) { %>
-            <% if(post.user_id == userId) { %>
-              <li class="post my_post">
-                <div class="ql-snow">
-                  <div class="ql-editor"
-                    style="white-space: normal; padding: 5px 5px;">
-                    <%- post.contents %>
+      <div class="app">
+        <%- include('./sidebar', {threadTitle: 'ホーム' , subThreads: ['全体連絡', 'カレンダー' ]}); %>
+          <div class="main_wrapper">
+            <div class="main_header">
+              <div class="header_content">
+                <p>全体連絡</p>
+              </div>
+            </div>
+            <div class="main_body">
+              <div id="post_area">
+                <li class="post">
+                  <div class="post_data">
+                    <div class="name">
+                      <p>佐々木 柊</p>
+                    </div>
+                    <div class="date">
+                      <p>2024/01/18</p>
+                    </div>
+                  </div>
+                  <div class="ql-snow post_content">
+                    アプリデザインの変更<br>
+                    cssの変更点 ・アイコンに使用する画像をpngからsvgへと変換した。
+                  </div>
+                </li>
+              </div>
+              <form action="/content" method="post" onsubmit="clickSubmit()">
+                <div class="form_area">
+                  <div class="writing_quill_area">
+                    <textarea name="contents" style="display:none" id="contents"></textarea>
+                    <div id="editor"></div>
+                  </div>
+                  <div class="buttons">
+                    <div class="toolbar_switch">
+                      <img src="../public/images/toolbar.svg" class="toolbar_button button-icon icon">
+                    </div>
+                    <div class="enter_area">
+                      <img src="../public/images/post.svg" alt="送信" class="enter_button button-icon icon">
+                      <input type="submit" value="post">
+                    </div>
                   </div>
                 </div>
-              </li>
-            <% } else { %>
-              <li class="post others_post">
-                <div class="ql-snow">
-                  <div class="ql-editor"
-                    style="white-space: normal; padding: 5px 5px;">
-                    <%- post.contents %>
-                  </div>
-                </div>
-              </li>
-            <% } %>
-          <% } %>
-        </div>
-        <div class="form_area">
-          <form action="/content" method="post" onsubmit="clickSubmit()">
-            <div class="writing_quill_area">
-              <textarea name="contents" style="display:none" id="contents"></textarea>
-              <div id="editor"></div>
+              </form>
             </div>
-            <div class="enter-area">
-              <button type="submit" class="enter button button-icon redButton">送信</button>
-            </div>
-          </form>
-        </div>
+          </div>
       </div>
-    </div>
-  <% } else { %>
-    <h1>Welcome to the Tech Log</h1>
-    <a href="/signin">Sign in now!</a>
-    <a href="/signup">Sign up if you're not registered yet!</a>
-  <% } %>
+      <% } else { %>
+        <h1>Welcome to the Tech Log</h1>
+        <a href="/signin">Sign in now!</a>
+        <a href="/signup">Sign up if you're not registered yet!</a>
+        <% } %>
 </body>
 
 <script src="https://cdn.quilljs.com/1.3.7/quill.js"></script>
@@ -85,7 +91,7 @@
     }
   });
 
-  function clickSubmit(){
+  function clickSubmit() {
 
     document.getElementById('contents').value = quill.root.innerHTML;
     document.form.submit();

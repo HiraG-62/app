@@ -13,19 +13,42 @@
 
 <body>
   <%- include('./error_messages'); %>
-  <% if(isAuth) { %>
-    <%- include('./header.ejs'); %>
+    <% if(isAuth) { %>
 
-    <div class="main_wrapper">
-      <div class="main_body">
-        <a href="/manage/assignlabs">研究室配属</a>
-        <a href="/manage/manageCalendar">カレンダー設定</a>
+      <div class="app">
+
+        <%- include('./sidebar', {threadTitle: 'ホーム' , subThreads: ['全体連絡', 'カレンダー' ]}); %>
+          <div class="main_wrapper">
+            <div class="main_header">
+              <div class="header_content">
+                <p>全体連絡</p>
+              </div>
+            </div>
+            <div class="main_body">
+              <div id="contents_area">
+                <a href="/manage/assignlabs">研究室配属</a>
+                <a href="/manage/manageCalendar">カレンダー設定</a>
+              </div>
+            </div>
+          </div>
       </div>
-    </div>
-  <% } else { %>
-    <h1>Welcome to the Tech Log</h1>
-    <a href="/signin">Sign in now!</a>
-  <% } %>
+      <% } else { %>
+        <h1>Welcome to the Tech Log</h1>
+        <a href="/signin">Sign in now!</a>
+        <% } %>
 </body>
+<style>
+  .main_body {
+    display: block;
+  }
+  
+  #contents_area {
+    height: 100%;
+    max-height: 85vh;
+    display: flex;
+    flex-direction: column;
+    
+  }
+</style>
 
 </html>

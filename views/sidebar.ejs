@@ -1,0 +1,54 @@
+<div class="sidebar">
+    <div class="main_threads_bar">
+        <div class="sidebar_icon home" tabindex="-1">
+            <img src="../public/images/home.svg" class="icon">
+            <a href="/"></a>
+        </div>
+        <div class="sidebar_icon mypage" tabindex="-1">
+            <img src="../public/images/mypage.svg" class="icon">
+            <a href="/mypage"></a>
+        </div>
+        <div class="sidebar_icon lab" tabindex="-1">
+            <img src="../public/images/lab.svg" class="icon">
+            <a href="/lab"></a>
+        </div>
+        <div class="sidebar_icon manage" tabindex="-1">
+            <img src="../public/images/manage.svg" class="icon">
+            <a href="/manage"></a>
+        </div>
+    </div>
+    <div class="sub_threads_bar">
+        <div class="sub_threads_header">
+            <p>
+                <%= threadTitle %>
+            </p>
+        </div>
+        <% for(let [index, s] of Object.entries(subThreads)) { %>
+            <li>
+                <div class='sub_thread_<%=index%>'>
+                    <div class="sub_thread">
+                        <p>
+                            <%= s %>
+                        </p>
+                        <a href=""></a>
+                    </div>
+                </div>
+            </li>
+            <% } %>
+    </div>
+</div>
+
+<style>
+    .home {
+        background-color: #eee;
+        margin-right: 0;
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+
+    .sub_thread_0 {
+        background-color: #fff;
+        cursor: pointer;
+        border-left: 4px solid rgb(58, 171, 210);
+    }
+</style>

@@ -7,31 +7,32 @@ router.get('/', function (req, res, next) {
   
     if (isAuth) {
       const userId = req.user.id;
-      knex('posts')
-        .select('*')
-        .where({user_id: userId})
-        .then(function (results) {
-          res.render('mypage', {
-            title: 'Leaf',
-            userId: userId,
-            posts: results,
-            isAuth: isAuth,
-          })
-        })
-        .catch(function (err) {
-          console.error(err);
-          res.render('index', {
-            title: 'Leaf',
-            userId: userId,
-            posts: results,
-            isAuth: isAuth,
-          })
-        })
-    } else {
-      res.render('index', {
-        title: 'Leaf',
+      res.render('mypage', {
+        title: 'マイページ',
         isAuth: isAuth,
       })
+    //   knex('posts')
+    //     .select('*')
+    //     .where({user_id: userId})
+    //     .then(function (results) {
+    //       res.render('mypage', {
+    //         title: 'マイページ',
+    //         isAuth: isAuth,
+    //       })
+    //     })
+    //     .catch(function (err) {
+    //       console.error(err);
+    //       res.render('index', {
+    //         title: 'Leaf',
+    //         isAuth: isAuth,
+    //       })
+    //     })
+    // } else {
+    //   res.render('index', {
+    //     title: 'Leaf',
+    //     isAuth: isAuth,
+    //   })
+    // }
     }
   });
 
