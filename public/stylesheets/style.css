@@ -79,11 +79,15 @@ a {
   background-color: orange;
 }
 
-.sidebar_icon:focus {
+.sidebar_icon:has(.check_sidebar:checked) {
   background-color: #eee;
   margin-right: 0;
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
+}
+
+.sidebar_icon .check_sidebar {
+  display: none;
 }
 
 .main_threads_bar img {

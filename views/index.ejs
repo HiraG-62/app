@@ -18,7 +18,7 @@
     <% if(isAuth) { %>
 
       <div class="app">
-        <%- include('./sidebar', {threadTitle: 'ホーム' , subThreads: ['全体連絡', 'カレンダー' ]}); %>
+        <%- include('./sidebar', {threadTitle: title, subThreads: ['全体連絡', 'カレンダー' ]}); %>
           <div class="main_wrapper">
             <div class="main_header">
               <div class="header_content">
@@ -96,6 +96,11 @@
     document.getElementById('contents').value = quill.root.innerHTML;
     document.form.submit();
   }
+
+  console.log(mainThread);
+  let main = document.getElementById(`check_${mainThread}`);
+  main.checked = true;
+
 </script>
 
 </html>
