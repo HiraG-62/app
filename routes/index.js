@@ -14,9 +14,11 @@ router.get('/', function (req, res, next) {
       .select('*')
       .then(function (results) {
         res.render('index', {
-          title: 'Leaf',
+          title: 'ホーム',
           isAuth: isAuth,
-          mainThread: 'home'
+          mainThread: 'home',
+          subThreads: [ 'トップページ', '全体連絡', 'カレンダー' ],
+          subThreadIndex: '0'
         })
       })
       .catch(function (err) {
@@ -24,12 +26,14 @@ router.get('/', function (req, res, next) {
         res.render('index', {
           title: 'Leaf',
           isAuth: isAuth,
+          mainThread: 'home',
         })
       })
   } else {
     res.render('index', {
       title: 'Leaf',
       isAuth: isAuth,
+      mainThread: 'home',
     })
   }
 });

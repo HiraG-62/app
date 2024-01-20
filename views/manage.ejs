@@ -5,6 +5,7 @@
   <title>
     <%= title %>
   </title>
+  <meta http-equiv="Refresh" content="0;URL=/manage/assignlabs">
   <link type="text/css" rel='stylesheet' href='/public/stylesheets/style.css' />
   <link type="text/css" rel='stylesheet' href='/public/stylesheets/reset.css' />
   <link type="text/css" rel="stylesheet" href="/public/stylesheets/parts.css" />
@@ -16,27 +17,34 @@
     <% if(isAuth) { %>
 
       <div class="app">
-
-        <%- include('./sidebar', {threadTitle: 'ホーム' , subThreads: ['全体連絡', 'カレンダー' ]}); %>
+        <%- include('./sidebar', { threadTitle: title, subThreads: subThreads, index: subThreadIndex }); %>
           <div class="main_wrapper">
             <div class="main_header">
               <div class="header_content">
-                <p>全体連絡</p>
+                <%= subThreads[0] %>
+              </div>
+              <div class="search_area">
+                <label for="check_search">
+                  <div id="search" class="header_icon">
+                      <img src="../public/images/search.svg" class="icon">
+                      <input type="checkbox" name="" id="check_search" class="check_header" style="display: none;">
+                  </div>
+                </label>
+                <div class="search_form">
+                  <input type="text" title="検索" name="" id="">
+                </div>
               </div>
             </div>
             <div class="main_body">
-              <div id="contents_area">
-                <a href="/manage/assignlabs">研究室配属</a>
-                <a href="/manage/manageCalendar">カレンダー設定</a>
+              <div id="post_area">
               </div>
             </div>
           </div>
       </div>
       <% } else { %>
-        <h1>Welcome to the Tech Log</h1>
-        <a href="/signin">Sign in now!</a>
         <% } %>
 </body>
+
 <style>
   .main_body {
     display: block;

@@ -8,6 +8,9 @@ router.get('/', function (req, res, next) {
     res.render('manageCalendar', {
         title: 'カレンダー設定',
         isAuth: isAuth,
+        mainThread: 'manage',
+        subThreads: [ '研究室管理ページ', 'カレンダー編集' ],
+        subThreadIndex: 1,
     })
 });
 

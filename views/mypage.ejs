@@ -5,6 +5,11 @@
   <title>
     <%= title %>
   </title>
+
+  <% if(!isAuth) { %>
+    <meta http-equiv="Refresh" content="0;URL=/signin">
+    <% } %>
+
   <link type="text/css" rel='stylesheet' href='/public/stylesheets/style.css' />
   <link type="text/css" rel='stylesheet' href='/public/stylesheets/reset.css' />
   <link type="text/css" rel="stylesheet" href="/public/stylesheets/parts.css" />
@@ -14,14 +19,16 @@
 </head>
 
 <body>
+
   <%- include('./error_messages'); %>
   <% if(isAuth) { %>
+
     <div class="app">
-      <%- include('./sidebar', {threadTitle: title , subThreads: ['全体連絡', 'カレンダー' ]}); %>
+      <%- include('./sidebar', { threadTitle: title, subThreads: subThreads, index: subThreadIndex }); %>
         <div class="main_wrapper">
           <div class="main_header">
             <div class="header_content">
-              <p>ホーム</p>
+              <%= subThreads[0] %>
             </div>
           </div>
           <div class="main_body">
@@ -29,17 +36,13 @@
               <li class="post">
                 <div class="post_data">
                   <div class="name">
-                    <p>佐々木 柊</p>
+                    <p>name</p>
                   </div>
                   <div class="date">
                     <p>2024/01/18</p>
                   </div>
                 </div>
                 <div class="ql-snow post_content">
-                  アプリデザインの変更<br>
-                  cssの変更点<br>
-                  ・アイコンに使用する画像をpngからsvgへと変換した。<br>
-                  ・細かなデザインの修正
                 </div>
               </li>
             </div>
@@ -64,8 +67,6 @@
         </div>
     </div>
   <% } else { %>
-    <h1>Welcome to the Tech Log</h1>
-    <a href="/signin">Sign in now!</a>
   <% } %>
 </body>
 

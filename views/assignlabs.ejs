@@ -13,80 +13,102 @@
 
 <body>
   <%- include('./error_messages'); %>
-  <% if(isAuth) { %>
-    <%- include('./header.ejs'); %>
-
-    <div class="main_wrapper">
-      <div class="main_body">
-        <div class="assign">
-          <div class="labs">
-            <select name="lab_name" form="assign" size="1" id="">
-              <% for(let lab of labs) { %>
-                <% if(lab.exist == 1) { %>
-                  <option value=<%= lab.name %>><%= lab.name %></option>
-                <% } %>
-              <% } %>
-            </select>
-            <div class="manage_labs">
-              <input type="checkbox" id="popup">
-              <label class="popup_opne" for="popup">研究室管理</label>
-              <div class="popup_overlay">
-                <div class="popup_window">
-                  <div class="manage_labs_form">
-                    <input type="radio" name="addOrRemove" value="追加" id="radio_add" checked />
-                    <label for="radio_add">追加</label>
-                    <input type="radio" name="addOrRemove" value="削除" id="radio_remove" />
-                    <label for="radio_remove">削除</label>
-                    <div class="add_lab">
-                      <form action="/manage/assignlabs" method="post">
-                        <label>研究室名</label>
-                        <input required type="text" name="labs_name" />
-                        <br>
-                        <input type="submit" name="addLab" value="追加" class="redButton" />
-                      </form>
-                    </div>
-                    <div class="remove_lab">
-                      <form action="/manage/assignlabs" method="post">
-                        <div class="labs_list">
-                          <% for(let [index, lab] of Object.entries(labs)) { %>
-                            <div>
-                              <input type="checkbox" id="labCheck<%= index %>" name="lab_check" value="<%= lab.name %>">
-                              <label for="labCheck<%= index %>"><%= lab.name %></label>
-                            </div>
-                          <% } %>
-                        </div>
-                        <input type="submit" name="removeLab" value="削除" class="redButton" />
-                      </form>
-                    </div>
+    <% if(isAuth) { %>
+      <div class="app">
+        <%- include('./sidebar', { threadTitle: title, subThreads: subThreads, index: subThreadIndex }); %>
+          <div class="main_wrapper">
+            <div class="main_header">
+              <div class="header_content">
+                <%= subThreads[0] %>
+              </div>
+              <div class="search_area">
+                <label for="check_search">
+                  <div id="search" class="header_icon">
+                    <img src="../public/images/search.svg" class="icon">
+                    <input type="checkbox" name="" id="check_search" class="check_header" style="display: none;">
                   </div>
-                  <label class="popup_close" for="popup">
-                    <svg width="18" height="18" xmlns="http://www.w3.org/2000/svg">
-                      <line x1="0" y1="0" x2="18" y2="18" stroke="white" stroke-width="3"></line>
-                      <line x1="0" y1="18" x2="18" y2="0" stroke="white" stroke-width="3"></line>
-                    </svg>
-                  </label>
+                </label>
+                <div class="search_form">
+                  <input type="text" title="検索" name="" id="">
                 </div>
               </div>
             </div>
-          </div>
-          <form action="/manage/assignlabs" method="post" id="assign" style="width: auto;">
-            <input type="submit" name="assignLab" value="決定" class="redButton" form="assign">
-          </form>
-        </div>
-        <div class="account_list">
-          <% for(let [index, user] of Object.entries(users)) { %>
-            <div class="account_check">
-              <input type="checkbox" form="assign" id="assign_check<%= index %>" name="assign_members" value="<%= user.email%>" />
-              <label for="assign_check<%= index %>"><%= user.email %></label>
+            <div id="post_area">
+              <div class="assign">
+                <div class="labs">
+                  <select name="lab_name" form="assign" size="1" id="">
+                    <% for(let lab of labs) { %>
+                      <% if(lab.exist==1) { %>
+                        <option value=<%=lab.name %>><%= lab.name %>
+                        </option>
+                        <% } %>
+                          <% } %>
+                  </select>
+                  <div class="manage_labs">
+                    <input type="checkbox" id="popup">
+                    <label class="popup_opne" for="popup">研究室管理</label>
+                    <div class="popup_overlay">
+                      <div class="popup_window">
+                        <div class="manage_labs_form">
+                          <input type="radio" name="addOrRemove" value="追加" id="radio_add" checked />
+                          <label for="radio_add">追加</label>
+                          <input type="radio" name="addOrRemove" value="削除" id="radio_remove" />
+                          <label for="radio_remove">削除</label>
+                          <div class="add_lab">
+                            <form action="/manage/assignlabs" method="post">
+                              <label>研究室名</label>
+                              <input required type="text" name="labs_name" />
+                              <br>
+                              <input type="submit" name="addLab" value="追加" class="redButton" />
+                            </form>
+                          </div>
+                          <div class="remove_lab">
+                            <form action="/manage/assignlabs" method="post">
+                              <div class="labs_list">
+                                <% for(let [index, lab] of Object.entries(labs)) { %>
+                                  <div>
+                                    <input type="checkbox" id="labCheck<%= index %>" name="lab_check"
+                                      value="<%= lab.name %>">
+                                    <label for="labCheck<%= index %>">
+                                      <%= lab.name %>
+                                    </label>
+                                  </div>
+                                  <% } %>
+                              </div>
+                              <input type="submit" name="removeLab" value="削除" class="redButton" />
+                            </form>
+                          </div>
+                        </div>
+                        <label class="popup_close" for="popup">
+                          <svg width="18" height="18" xmlns="http://www.w3.org/2000/svg">
+                            <line x1="0" y1="0" x2="18" y2="18" stroke="white" stroke-width="3"></line>
+                            <line x1="0" y1="18" x2="18" y2="0" stroke="white" stroke-width="3"></line>
+                          </svg>
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <form action="/manage/assignlabs" method="post" id="assign" style="width: auto;">
+                  <input type="submit" name="assignLab" value="決定" class="redButton" form="assign">
+                </form>
+              </div>
+              <div class="account_list">
+                <% for(let [index, user] of Object.entries(users)) { %>
+                  <div class="account_check">
+                    <input type="checkbox" form="assign" id="assign_check<%= index %>" name="assign_members"
+                      value="<%= user.email%>" />
+                    <label for="assign_check<%= index %>">
+                      <%= user.email %>
+                    </label>
+                  </div>
+                  <% } %>
+              </div>
             </div>
-          <% } %>
-        </div>
+          </div>
       </div>
-    </div>
-  <% } else { %>
-    <h1>Welcome to the Tech Log</h1>
-    <a href="/signin">Sign in now!</a>
-  <% } %>
+      <% } else { %>
+        <% } %>
 </body>
 
 </html>

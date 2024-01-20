@@ -5,24 +5,40 @@
   <title>
     <%= title %>
   </title>
-  <link type="text/css" rel='stylesheet' href='/public/stylesheets/style.css' />
-  <link type="text/css" rel='stylesheet' href='/public/stylesheets/reset.css' />
-  <link type="text/css" rel="stylesheet" href="/public/stylesheets/parts.css" />
 
-  <link href="https://cdn.quilljs.com/1.3.7/quill.snow.css" rel="stylesheet">
+  <% if(!isAuth) { %>
+    <meta http-equiv="Refresh" content="0;URL=/signin">
+    <% } %>
 
+      <link type="text/css" rel='stylesheet' href='/public/stylesheets/style.css' />
+      <link type="text/css" rel='stylesheet' href='/public/stylesheets/reset.css' />
+      <link type="text/css" rel="stylesheet" href="/public/stylesheets/parts.css" />
+
+      <link href="https://cdn.quilljs.com/1.3.7/quill.snow.css" rel="stylesheet">
 </head>
 
 <body>
+
   <%- include('./error_messages'); %>
     <% if(isAuth) { %>
 
       <div class="app">
-        <%- include('./sidebar', {threadTitle: title, subThreads: ['全体連絡', 'カレンダー' ]}); %>
+        <%- include('./sidebar', { threadTitle: title, subThreads: subThreads, index: subThreadIndex }); %>
           <div class="main_wrapper">
             <div class="main_header">
               <div class="header_content">
-                <p>全体連絡</p>
+                <%= subThreads[0] %>
+              </div>
+              <div class="search_area">
+                <label for="check_search">
+                  <div id="search" class="header_icon">
+                      <img src="../public/images/search.svg" class="icon">
+                      <input type="checkbox" name="" id="check_search" class="check_header" style="display: none;">
+                  </div>
+                </label>
+                <div class="search_form">
+                  <input type="text" title="検索" name="" id="">
+                </div>
               </div>
             </div>
             <div class="main_body">
@@ -30,15 +46,14 @@
                 <li class="post">
                   <div class="post_data">
                     <div class="name">
-                      <p>佐々木 柊</p>
+                      <p>name</p>
                     </div>
                     <div class="date">
-                      <p>2024/01/18</p>
+                      <p>date</p>
                     </div>
                   </div>
                   <div class="ql-snow post_content">
-                    アプリデザインの変更<br>
-                    cssの変更点 ・アイコンに使用する画像をpngからsvgへと変換した。
+                    <p>content</p>
                   </div>
                 </li>
               </div>
@@ -63,9 +78,6 @@
           </div>
       </div>
       <% } else { %>
-        <h1>Welcome to the Tech Log</h1>
-        <a href="/signin">Sign in now!</a>
-        <a href="/signup">Sign up if you're not registered yet!</a>
         <% } %>
 </body>
 
@@ -92,15 +104,9 @@
   });
 
   function clickSubmit() {
-
     document.getElementById('contents').value = quill.root.innerHTML;
     document.form.submit();
   }
-
-  console.log(mainThread);
-  let main = document.getElementById(`check_${mainThread}`);
-  main.checked = true;
-
 </script>
 
 </html>

@@ -13,10 +13,13 @@ router.get('/', function (req, res, next) {
               .select('*')
               .then(function (labsResults) {
                 res.render('assignlabs', {
-                  title: 'Leaf',
-                  users: usersResults,
-                  labs: labsResults,
+                  title: '研究室配属',
                   isAuth: isAuth,
+                  mainThread: 'manage',
+                  subThreads: [ '研究室管理ページ', 'カレンダー編集' ],
+                  subThreadIndex: 0,
+                  labs: labsResults,
+                  users: usersResults
                 })
             })
           })
@@ -25,8 +28,10 @@ router.get('/', function (req, res, next) {
             res.render('index', {
               title: 'Leaf',
               userId: userId,
-              posts: results,
               isAuth: isAuth,
+              mainThread: 'home',
+              subThreads: [ 'トップページ', '全体連絡', 'カレンダー' ],
+              subThreadIndex: '0'
             })
           })
       } else {

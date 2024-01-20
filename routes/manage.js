@@ -7,8 +7,11 @@ router.get('/', function (req, res, next) {
   
     if (isAuth) {
       res.render('manage', {
-        title: 'Leaf',
+        title: '管理機能',
         isAuth: isAuth,
+        mainThread: 'manage',
+        subThreads: [ '研究室管理ページ', 'カレンダー編集' ],
+        subThreadIndex: 0
       });
     } else {
       res.render('index', {
@@ -23,6 +26,6 @@ router.post('/', function(req, res, next) {
 });
 
 router.use('/assignlabs', require('./assignlabs'));
-router.use('/manage_calendar', require('./manageCalendar'));
+router.use('/manageCalendar', require('./manageCalendar'));
 
 module.exports = router;

@@ -8,19 +8,31 @@
         <%= title %>
     </title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link type="text/css" rel="stylesheet" href="/public/stylesheets/reset.css" />
+    <link type="text/css" rel="stylesheet" href="/public/stylesheets/style.css" />
+    <link type="text/css" rel="stylesheet" href="/public/stylesheets/parts.css" />
 </head>
 
 <body>
     <%- include('./error_messages'); %>
-    <form action="/signin" method="post">
-        <label>メールアドレス</label>
-        <input required type="email" name="email" />
-        <br>
-        <label>パスワード</label>
-        <input required type="password" name="password" />
-        <br>
-        <input type="submit" value="Sign in" />
-    </form>
+    <div class="sign_wrapper">
+        <div class="sign_body">
+            <h1>サインイン</h1>
+            <form action="/signin" method="post">
+                <div class="form_text">
+                    <label>メールアドレス</label>
+                    <input required type="email" name="email" />
+                </div>
+                <div class="form_text">
+                    <label>パスワード</label>
+                    <input required type="password" name="password" />
+                </div>
+                <input type="submit" value="サインイン" class="submit_button redButton"/>
+
+            </form>
+            <a href="signup">アカウント登録</a>
+        </div>
+    </div>
 </body>
 
 </html>

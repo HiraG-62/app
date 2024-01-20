@@ -21,6 +21,13 @@
                 <input type="checkbox" name="" id="check_lab" class="check_sidebar">
             </div>
         </label>
+        <label for="check_DM">
+            <div id="lab" class="sidebar_icon">
+                <img src="../public/images/dm.svg" class="icon">
+                <a href="/dm"></a>
+                <input type="checkbox" name="" id="check_DM" class="check_sidebar">
+            </div>
+        </label>
         <label for="check_manage">
             <div id="manage" class="sidebar_icon">
                 <img src="../public/images/manage.svg" class="icon">
@@ -36,16 +43,31 @@
             </p>
         </div>
         <% for(let [index, s] of Object.entries(subThreads)) { %>
-            <li>
-                <div class='sub_thread_<%=index%>'>
+            <label for="check_<%=index%>">
+                <div id="sub_thread_<%=index%>">
                     <div class="sub_thread">
                         <p>
                             <%= s %>
                         </p>
-                        <a href=""></a>
+                        <input type="radio" name="sub" id="check_<%=index%>" class="check_sub_thread" style="display: none;">
                     </div>
                 </div>
-            </li>
+            </label>
             <% } %>
     </div>
 </div>
+<div style="display: none;" id="main_thread_name"><%=mainThread%></div>
+<div style="display: none;" id="sub_thread_id"><%=index%></div>
+<script>
+    let mainThread = document.getElementById('main_thread_name').innerHTML;
+    
+    let selectedMain = document.getElementById(`check_${mainThread}`);
+    selectedMain.checked = true;
+
+
+    let subThreadIndex = document.getElementById('sub_thread_id').innerHTML;
+
+    let selectedSub = document.getElementById(`check_${subThreadIndex}`);
+    selectedSub.checked = true;
+
+</script>

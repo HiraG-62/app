@@ -10,6 +10,9 @@ router.get('/', function (req, res, next) {
       res.render('mypage', {
         title: 'マイページ',
         isAuth: isAuth,
+        mainThread: 'mypage',
+        subThreads: [ '自分の投稿' ],
+        subThreadIndex: 0
       })
     //   knex('posts')
     //     .select('*')

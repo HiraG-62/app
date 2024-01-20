@@ -261,64 +261,60 @@
 <body>
   <%- include('./error_messages'); %>
     <% if(isAuth) { %>
-      <%- include('./header.ejs'); %>
+      <div class="app">
+        <%- include('./sidebar', { threadTitle: title, subThreads: subThreads, index: subThreadIndex }); %>
 
-        <div class="calendar_wrapper">
+          <div class="calendar_wrapper">
 
-          <div id="calendar"></div>
+            <div id="calendar"></div>
 
-          <input type="checkbox" id="popup">
-          <div class="popup_overlay">
-            <div class="popup_window">
+            <input type="checkbox" id="popup">
+            <div class="popup_overlay">
+              <div class="popup_window">
 
-              <div>
-                <label>科目名<input type="text" id="class_name"></label>
-                <br>
-                <label>日時<input type="date" id="class_date"></label>
-                <br>
-                <label>授業時刻 <input type="time" id="start_time" style="width: 100px;"> ～ <input type="time" id="end_time"
-                    width="50px" style="width: 100px;"></label>
+                <div>
+                  <label>科目名<input type="text" id="class_name"></label>
+                  <br>
+                  <label>日時<input type="date" id="class_date"></label>
+                  <br>
+                  <label>授業時刻 <input type="time" id="start_time" style="width: 100px;"> ～ <input type="time"
+                      id="end_time" width="50px" style="width: 100px;"></label>
 
-              </div>
-
-              <div class="buttons">
-                <div class="greenButton" id="confirm" style="width: fit-content; margin: 10px 0 0 0"
-                  onclick="confirmEventClick()">確定</div>
-                <div class="greenButton" id="create" style="width: fit-content; margin: 10px 0 0 0"
-                  onclick="createEventClick()">作成</div>
-                <div class="redButton" id="delete" style="width: fit-content; margin: 10px 0 0 auto;"
-                  onclick="deleteEventClick()">
-                  削除</div>
-              </div>
-
-              <label class="popup_close" for="popup">
-                <svg width="18" height="18" xmlns="http://www.w3.org/2000/svg">
-                  <line x1="0" y1="0" x2="18" y2="18" stroke="white" stroke-width="3"></line>
-                  <line x1="0" y1="18" x2="18" y2="0" stroke="white" stroke-width="3"></line>
-                </svg>
-              </label>
-            </div>
-          </div>
-
-          <div id='external-events'>
-            <h4>授業一覧</h4>
-
-            <div id='external-events-list'>
-              <% for(let i=0;i < 3;i++) { %>
-                <div class='fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event'>
-                  <div class='fc-event-main'>test<%=i%>
-                  </div>
                 </div>
-                <% } %>
+
+                <div class="buttons">
+                  <div class="greenButton" id="confirm" style="width: fit-content; margin: 10px 0 0 0"
+                    onclick="confirmEventClick()">確定</div>
+                  <div class="greenButton" id="create" style="width: fit-content; margin: 10px 0 0 0"
+                    onclick="createEventClick()">作成</div>
+                  <div class="redButton" id="delete" style="width: fit-content; margin: 10px 0 0 auto;"
+                    onclick="deleteEventClick()">
+                    削除</div>
+                </div>
+
+                <label class="popup_close" for="popup">
+                  <svg width="18" height="18" xmlns="http://www.w3.org/2000/svg">
+                    <line x1="0" y1="0" x2="18" y2="18" stroke="white" stroke-width="3"></line>
+                    <line x1="0" y1="18" x2="18" y2="0" stroke="white" stroke-width="3"></line>
+                  </svg>
+                </label>
+              </div>
+            </div>
+
+            <div id='external-events' style="display: none;">
+              <h4>授業一覧</h4>
+
+              <div id='external-events-list'>
+
+              </div>
             </div>
           </div>
-
-        </div>
-        <% } else { %>
-          <h1>Welcome to the Tech Log</h1>
-          <a href="/signin">Sign in now!</a>
-          <a href="/signup">Sign up if you're not registered yet!</a>
-          <% } %>
+      </div>
+      <% } else { %>
+        <h1>Welcome to the Tech Log</h1>
+        <a href="/signin">Sign in now!</a>
+        <a href="/signup">Sign up if you're not registered yet!</a>
+        <% } %>
 
 </body>
 
