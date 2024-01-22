@@ -1,11 +1,11 @@
-function getRenderData(auth, out, obj) {
+function getRenderData(auth, out, index=0, obj) {
     if(out == 'index') {
         return {
             title: 'ホーム',
             isAuth: auth,
             mainThread: 'home',
             subThreads: ['トップページ', '全体連絡', 'カレンダー'],
-            subThreadIndex: '0',
+            subThreadIndex: index,
             urls: ['/', '/general', '/calendar']
         }
     } else if(out == 'manage') {
@@ -15,7 +15,7 @@ function getRenderData(auth, out, obj) {
                 isAuth: auth,
                 mainThread: 'manage',
                 subThreads: ['研究室管理ページ', 'カレンダー編集'],
-                subThreadIndex: 0,
+                subThreadIndex: index,
                 urls: ['/assignlabs', '/manageCalendar'],
             }, obj);
         }
@@ -24,7 +24,7 @@ function getRenderData(auth, out, obj) {
             isAuth: auth,
             mainThread: 'manage',
             subThreads: ['研究室管理ページ', 'カレンダー編集'],
-            subThreadIndex: 0,
+            subThreadIndex: index,
             urls: ['/assignlabs', '/manageCalendar'],
         }
     }

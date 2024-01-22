@@ -13,8 +13,7 @@ router.get('/', function (req, res, next) {
             knex('labs')
               .select('*')
               .then(function (labsResults) {
-
-                res.render('assignlabs', render.getRenderData(isAuth, 'manage', {labs: labsResults ,users: usersResults }));
+                res.render('assignlabs', render.getRenderData(isAuth, 'manage', 0, {labs: labsResults, users: usersResults }));
             })
           })
           .catch(function (err) {

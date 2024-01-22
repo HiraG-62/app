@@ -262,7 +262,26 @@
   <%- include('./error_messages'); %>
     <% if(isAuth) { %>
       <div class="app">
-        <%- include('./sidebar', { threadTitle: title, subThreads: subThreads, index: subThreadIndex }); %>
+        <%- include('./sidebar', { threadTitle: title, subThreads: subThreads, index: subThreadIndex, urls: urls }); %>
+
+        <div class="main_wrapper">
+
+          <div class="main_header">
+            <div class="header_content">
+              <%= subThreads[subThreadIndex] %>
+            </div>
+            <div class="search_area">
+              <label for="check_search">
+                <div id="search" class="header_icon">
+                    <img src="../public/images/search.svg" class="icon">
+                    <input type="checkbox" name="" id="check_search" class="check_header" style="display: none;">
+                </div>
+              </label>
+              <div class="search_form">
+                <input type="text" title="検索" name="" id="">
+              </div>
+            </div>
+          </div>
 
           <div class="calendar_wrapper">
 
@@ -309,6 +328,8 @@
               </div>
             </div>
           </div>
+
+        </div>
       </div>
       <% } else { %>
         <h1>Welcome to the Tech Log</h1>
