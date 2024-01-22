@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const knex = require('../db/knex');
+const render = require('../public/javascripts/rendarData');
 
 router.get('/', function (req, res, next) {
     const isAuth = req.isAuthenticated();
@@ -12,15 +13,8 @@ router.get('/', function (req, res, next) {
             knex('labs')
               .select('*')
               .then(function (labsResults) {
-                res.render('assignlabs', {
-                  title: '研究室配属',
-                  isAuth: isAuth,
-                  mainThread: 'manage',
-                  subThreads: [ '研究室管理ページ', 'カレンダー編集' ],
-                  subThreadIndex: 0,
-                  labs: labsResults,
-                  users: usersResults
-                })
+
+                res.render('assignlabs', render.getRenderData(isAuth, 'manage', {labs: labsResults ,users: usersResults }));
             })
           })
           .catch(function (err) {

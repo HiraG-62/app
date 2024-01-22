@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const mysql = require('mysql');
 const knex = require('../db/knex');
+const render = require('../public/javascripts/rendarData');
 
 
 /* GET home page. */
@@ -13,28 +14,14 @@ router.get('/', function (req, res, next) {
     knex('posts')
       .select('*')
       .then(function (results) {
-        res.render('index', {
-          title: 'ホーム',
-          isAuth: isAuth,
-          mainThread: 'home',
-          subThreads: [ 'トップページ', '全体連絡', 'カレンダー' ],
-          subThreadIndex: '0'
-        })
+        res.render('index', render.getRenderData(isAuth, 'index'));
       })
       .catch(function (err) {
         console.error(err);
-        res.render('index', {
-          title: 'Leaf',
-          isAuth: isAuth,
-          mainThread: 'home',
-        })
+        res.render('index', render.getRenderData(isAuth, 'index'));
       })
   } else {
-    res.render('index', {
-      title: 'Leaf',
-      isAuth: isAuth,
-      mainThread: 'home',
-    })
+    res.render('index', render.getRenderData(isAuth, 'index'));
   }
 });
 

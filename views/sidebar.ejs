@@ -49,6 +49,12 @@
                         <p>
                             <%= s %>
                         </p>
+                        <%  try {
+                                if(urls != undefined) { %>
+                                    <a href=".<%=urls[index]%>"></a>
+                        <%      }
+                            } catch(err) {} %>
+                            
                         <input type="radio" name="sub" id="check_<%=index%>" class="check_sub_thread" style="display: none;">
                     </div>
                 </div>

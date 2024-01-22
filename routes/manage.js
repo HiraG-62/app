@@ -1,23 +1,15 @@
 const express = require('express');
 const router = express.Router();
 const knex = require('../db/knex');
+const render = require('../public/javascripts/rendarData');
 
 router.get('/', function (req, res, next) {
     const isAuth = req.isAuthenticated();
   
     if (isAuth) {
-      res.render('manage', {
-        title: '管理機能',
-        isAuth: isAuth,
-        mainThread: 'manage',
-        subThreads: [ '研究室管理ページ', 'カレンダー編集' ],
-        subThreadIndex: 0
-      });
+      res.render('manage', render.getRenderData(isAuth, 'manage'));
     } else {
-      res.render('index', {
-        title: 'Leaf',
-        isAuth: isAuth,
-      })
+      res.render('index', render.getRenderData(isAuth, 'index'));
     }
   });
 
