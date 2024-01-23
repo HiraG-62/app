@@ -18,20 +18,10 @@ router.get('/', function (req, res, next) {
           })
           .catch(function (err) {
             console.error(err);
-            res.render('index', {
-              title: 'Leaf',
-              userId: userId,
-              isAuth: isAuth,
-              mainThread: 'home',
-              subThreads: [ 'トップページ', '全体連絡', 'カレンダー' ],
-              subThreadIndex: '0'
-            })
+            res.render('index', render.getRenderData(isAuth, 'index'));
           })
       } else {
-        res.render('index', {
-          title: 'Leaf',
-          isAuth: isAuth,
-        })
+        res.render('index', render.getRenderData(isAuth, 'index'));
       }
   });
 

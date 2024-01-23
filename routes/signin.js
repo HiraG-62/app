@@ -5,7 +5,7 @@ const passport = require('passport')
 router.get('/', function (req, res, next) {
     const isAuth = req.isAuthenticated();
     res.render('signin', {
-        title: 'Sign in',
+        title: 'サインイン',
         errorMessage: req.flash('error'),
         isAuth: isAuth,
     });
