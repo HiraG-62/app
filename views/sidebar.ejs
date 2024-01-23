@@ -47,33 +47,19 @@
                 <div id="sub_thread_<%=index%>">
                     <div class="sub_thread">
                         <p>
-                            <%= s %>
+                            <%= s.name %>
                         </p>
-                        <%  try {
-                                if(urls != undefined) { %>
-                                    <a href=".<%=urls[index]%>"></a>
-                        <%      }
-                            } catch(err) {} %>
-                            
-                        <input type="radio" name="sub" id="check_<%=index%>" class="check_sub_thread" style="display: none;">
+                        <% try { if(urls !=undefined) { %>
+                            <a href=".<%=urls[index]%>"></a>
+                            <% } } catch(err) {} %>
+
+                                <input type="radio" name="sub" id="check_<%=index%>" value="<%=s.name%>" class="check_sub_thread" style="display: none;">
                     </div>
                 </div>
             </label>
             <% } %>
     </div>
 </div>
-<div style="display: none;" id="main_thread_name"><%=mainThread%></div>
-<div style="display: none;" id="sub_thread_id"><%=index%></div>
-<script>
-    let mainThread = document.getElementById('main_thread_name').innerHTML;
-    
-    let selectedMain = document.getElementById(`check_${mainThread}`);
-    selectedMain.checked = true;
+<div style="display: none;" id="main_thread_name"><%=mainThread%></div> <!--改行しない-->
+<div style="display: none;" id="sub_thread_id"><%=index%></div>         <!--改行しない-->
 
-
-    let subThreadIndex = document.getElementById('sub_thread_id').innerHTML;
-
-    let selectedSub = document.getElementById(`check_${subThreadIndex}`);
-    selectedSub.checked = true;
-
-</script>
