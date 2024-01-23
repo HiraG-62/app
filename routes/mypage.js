@@ -7,13 +7,21 @@ router.get('/', function (req, res, next) {
   
     if (isAuth) {
       const userId = req.user.id;
-      res.render('mypage', {
-        title: 'マイページ',
-        isAuth: isAuth,
-        mainThread: 'mypage',
-        subThreads: [ '自分の投稿' ],
-        subThreadIndex: 0
-      })
+
+      knex('sub_threads')
+        .select('*')
+        .where({ user_id: userId })
+        .then(function (results) {
+          console.log(results.name)
+          res.render('mypage', {
+            title: 'マイページ',
+            isAuth: isAuth,
+            mainThread: 'mypage',
+            subThreads: ['自分の投稿'],
+            subThreadIndex: 0
+          })
+        })
+
     //   knex('posts')
     //     .select('*')
     //     .where({user_id: userId})
