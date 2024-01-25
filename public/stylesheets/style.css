@@ -377,7 +377,7 @@ a {
   box-sizing: border-box;
 }
 
-.enter_area input {
+.enter_area button {
   opacity: 0;
   position: absolute;
   top: 0;

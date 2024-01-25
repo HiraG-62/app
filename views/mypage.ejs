@@ -19,88 +19,12 @@
 </head>
 
 <body>
-
-  <%- include('./error_messages'); %>
-  <% if(isAuth) { %>
-
-    <div class="app">
-      <%- include('./sidebar', { threadTitle: title, index: subThreadIndex }); %>
-        <div class="main_wrapper">
-          <div class="main_header">
-            <div id="header_content"> 
-              <%= subThreads[0].name %>
-            </div>
-          </div>
-          <div class="main_body">
-            <div id="post_area">
-              <li class="post">
-                <div class="post_data">
-                  <div class="name">
-                    <p>name</p>
-                  </div>
-                  <div class="date">
-                    <p>2024/01/18</p>
-                  </div>
-                </div>
-                <div class="ql-snow post_content">
-                </div>
-              </li>
-            </div>
-            <form action="/content" method="post" onsubmit="clickSubmit()">
-              <div class="form_area">
-                <div class="writing_quill_area">
-                  <textarea name="contents" style="display:none" id="contents"></textarea>
-                  <div id="editor"></div>
-                </div>
-                <div class="buttons">
-                  <div class="toolbar_switch">
-                    <img src="../public/images/toolbar.svg" class="toolbar_button button-icon icon">
-                  </div>
-                  <div class="enter_area">
-                    <img src="../public/images/post.svg" alt="送信" class="enter_button button-icon icon">
-                    <input type="submit" value="post">
-                  </div>
-                </div>
-              </div>
-            </form>
-          </div>
-        </div>
-    </div>
-  <% } else { %>
-  <% } %>
+  
 </body>
 
 <script src="../public/javascripts/sidebar.js"></script>
 <script src="https://cdn.quilljs.com/1.3.7/quill.js"></script>
 <script src="https://cdn.quilljs.com/1.3.7/quill.min.js"></script>
-<script>
-  const toolbarOptions = [
-    ['bold', 'underline', 'strike'],        // toggled buttons
-    ['blockquote', 'code-block', 'link'],
-
-    [{ 'list': 'ordered' }, { 'list': 'bullet' }, { 'align': [] }],
-
-    [{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
-    [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-
-    [{ 'color': [] }, { 'background': [] }, { 'font': [] }],          // dropdown with defaults from theme
-  ];
-  const quill = new Quill('#editor', {
-    theme: 'snow',
-    placeholder: 'Enterで改行しCtrl + Enterで投稿します。',
-    modules: {
-      toolbar: toolbarOptions,
-    }
-  });
-
-  function submit() {
-    document.form.submit()
-  }
-
-  function clickSubmit() {
-    document.getElementById('contents').value = quill.root.innerHTML;
-    document.form.submit();
-  }
-</script>
+<script src="../public/javascripts/quill.js"></script>
 
 </html>

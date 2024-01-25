@@ -1,65 +1,125 @@
-<div class="sidebar">
-    <div class="main_threads_bar">
-        <label for="check_home">
-            <div id="home" class="sidebar_icon">
-                <img src="../public/images/home.svg" class="icon">
-                <a href="/"></a>
-                <input type="checkbox" name="" id="check_home" class="check_sidebar">
-            </div>
-        </label>
-        <label for="check_mypage">
-            <div id="mypage" class="sidebar_icon">
-                <img src="../public/images/mypage.svg" class="icon">
-                <a href="/mypage"></a>
-                <input type="checkbox" name="" id="check_mypage" class="check_sidebar">
-            </div>
-        </label>
-        <label for="check_lab">
-            <div id="lab" class="sidebar_icon">
-                <img src="../public/images/lab.svg" class="icon">
-                <a href="/lab"></a>
-                <input type="checkbox" name="" id="check_lab" class="check_sidebar">
-            </div>
-        </label>
-        <label for="check_DM">
-            <div id="lab" class="sidebar_icon">
-                <img src="../public/images/dm.svg" class="icon">
-                <a href="/dm"></a>
-                <input type="checkbox" name="" id="check_DM" class="check_sidebar">
-            </div>
-        </label>
-        <label for="check_manage">
-            <div id="manage" class="sidebar_icon">
-                <img src="../public/images/manage.svg" class="icon">
-                <a href="/manage"></a>
-                <input type="checkbox" name="" id="check_manage" class="check_sidebar">
-            </div>
-        </label>
-    </div>
-    <div class="sub_threads_bar">
-        <div class="sub_threads_header">
-            <p>
-                <%= threadTitle %>
-            </p>
-        </div>
-        <% for(let [index, s] of Object.entries(subThreads)) { %>
-            <label for="check_<%=index%>">
-                <div id="sub_thread_<%=index%>">
-                    <div class="sub_thread">
-                        <p>
-                            <%= s.name %>
-                        </p>
-                        <% try { if(urls !=undefined) { %>
-                            <a href=".<%=urls[index]%>"></a>
-                            <% } } catch(err) {} %>
+<%- include('./error_messages'); %>
+    <% if(isAuth) { %>
 
-                                <input type="radio" name="sub" id="check_<%=index%>" value="<%=s.name%>" class="check_sub_thread" style="display: none;">
+      <div class="app">
+        <div class="sidebar">
+            <div class="main_threads_bar">
+                <label for="check_home">
+                    <div id="home" class="sidebar_icon">
+                        <img src="../public/images/home.svg" class="icon">
+                        <a href="/"></a>
+                        <input type="checkbox" name="" id="check_home" class="check_sidebar">
+                    </div>
+                </label>
+                <label for="check_mypage">
+                    <div id="mypage" class="sidebar_icon">
+                        <img src="../public/images/mypage.svg" class="icon">
+                        <a href="/mypage"></a>
+                        <input type="checkbox" name="" id="check_mypage" class="check_sidebar">
+                    </div>
+                </label>
+                <label for="check_lab">
+                    <div id="lab" class="sidebar_icon">
+                        <img src="../public/images/lab.svg" class="icon">
+                        <a href="/lab"></a>
+                        <input type="checkbox" name="" id="check_lab" class="check_sidebar">
+                    </div>
+                </label>
+                <label for="check_DM">
+                    <div id="lab" class="sidebar_icon">
+                        <img src="../public/images/dm.svg" class="icon">
+                        <a href="/dm"></a>
+                        <input type="checkbox" name="" id="check_DM" class="check_sidebar">
+                    </div>
+                </label>
+                <label for="check_manage">
+                    <div id="manage" class="sidebar_icon">
+                        <img src="../public/images/manage.svg" class="icon">
+                        <a href="/manage"></a>
+                        <input type="checkbox" name="" id="check_manage" class="check_sidebar">
+                    </div>
+                </label>
+            </div>
+            <div class="sub_threads_bar">
+                <div class="sub_threads_header">
+                    <p>
+                        <%= title %>
+                    </p>
+                </div>
+                <% for(let [index, s] of Object.entries(subThreads)) { %>
+                    <label for="check_<%=index%>">
+                        <div id="sub_thread_<%=index%>">
+                            <div class="sub_thread">
+                                <p>
+                                    <%= s.name %>
+                                </p>
+                                <% try { if(urls !=undefined) { %>
+                                    <a href=".<%=urls[index]%>"></a>
+                                    <% } } catch(err) {} %>
+        
+                                        <input type="radio" name="sub" id="check_<%=index%>" value="<%=s.name%>" class="check_sub_thread" style="display: none;">
+                            </div>
+                        </div>
+                    </label>
+                    <% } %>
+            </div>
+        </div>
+        <div class="main_wrapper">
+            <div class="main_header">
+                <div id="header_content">
+                    <%= subThreads[subThreadIndex].name %>
+                </div>
+                <div class="search_area">
+                    <label for="check_search">
+                        <div id="search" class="header_icon">
+                            <img src="../public/images/search.svg" class="icon">
+                            <input type="checkbox" name="" id="check_search" class="check_header" style="display: none;">
+                        </div>
+                    </label>
+                    <div class="search_form">
+                        <input type="text" title="検索" name="" id="">
                     </div>
                 </div>
-            </label>
+            </div>
+            <div class="main_body">
+                <div id="post_area">
+                    <% for(post of posts) { %>
+                        <li class="post">
+                            <div class="post_data">
+                                <div class="name">
+                                    <p>name</p>
+                                </div>
+                                <div class="date">
+                                    <%=post.date%>
+                                </div>
+                            </div>
+                            <div class="ql-snow post_content">
+                                <%-post.contents%>
+                            </div>
+                        </li>
+                        <% } %>
+                    </div>
+                    <form action="/content" method="post" name="post">
+                        <div class="form_area">
+                            <div class="writing_quill_area">
+                                <textarea name="contents" style="display:none" id="contents"></textarea>
+                                <div id="editor"></div>
+                            </div>
+                            <div class="buttons">
+                                <div class="toolbar_switch">
+                                    <img src="../public/images/toolbar.svg" class="toolbar_button button-icon icon">
+                                </div>
+                                <div class="enter_area">
+                                    <img src="../public/images/post.svg" alt="送信" class="enter_button button-icon icon">
+                                    <button type="button" onclick="clickSubmit()"></button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div style="display: none;" id="main_thread_name"><%=mainThread%></div>     <!--改行しない-->
+            <div style="display: none;" id="sub_thread_id"><%=subThreadIndex%></div>    <!--改行しない-->
+        </div>
+        <% } else { %>
             <% } %>
-    </div>
-</div>
-<div style="display: none;" id="main_thread_name"><%=mainThread%></div> <!--改行しない-->
-<div style="display: none;" id="sub_thread_id"><%=index%></div>         <!--改行しない-->
-

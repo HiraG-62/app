@@ -11,43 +11,22 @@ router.get('/', function (req, res, next) {
       knex('sub_threads')
         .select('*')
         .where({ user_id: userId })
-        .then(function (results) {
-          res.render('mypage', {
-            title: 'マイページ',
-            isAuth: isAuth,
-            mainThread: 'mypage',
-            subThreads: results,
-            subThreadIndex: 0
-          })
+        .then(function (subThreadsResults) {
+          knex('posts')
+            .select('*')
+            .then(function (postsResults) {
+              res.render('index', {
+                title: 'マイページ',
+                isAuth: isAuth,
+                mainThread: 'mypage',
+                subThreads: subThreadsResults,
+                subThreadIndex: 0,
+                posts: postsResults
+              })
+            })
         })
-
-    //   knex('posts')
-    //     .select('*')
-    //     .where({user_id: userId})
-    //     .then(function (results) {
-    //       res.render('mypage', {
-    //         title: 'マイページ',
-    //         isAuth: isAuth,
-    //       })
-    //     })
-    //     .catch(function (err) {
-    //       console.error(err);
-    //       res.render('index', {
-    //         title: 'Leaf',
-    //         isAuth: isAuth,
-    //       })
-    //     })
-    // } else {
-    //   res.render('index', {
-    //     title: 'Leaf',
-    //     isAuth: isAuth,
-    //   })
-    // }
     }
   });
 
-router.post('/', function(req, res, next) {
-
-});
 
 module.exports = router;

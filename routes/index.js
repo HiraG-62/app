@@ -14,7 +14,7 @@ router.get('/', function (req, res, next) {
     knex('posts')
       .select('*')
       .then(function (results) {
-        res.render('index', render.getRenderData(isAuth, 'index'));
+        res.render('index', render.getRenderData(isAuth, 'index', 0, {posts: results}));
       })
       .catch(function (err) {
         console.error(err);
@@ -28,42 +28,18 @@ router.get('/', function (req, res, next) {
 router.post('/content', function (req, res, next) {
   const isAuth = req.isAuthenticated();
   const post = req.body.contents;
+  const date = new Date().toLocaleString('sv').replace(/-/g, '/').slice(0, -3);
+
+  console.log(req.name)
 
   knex('posts')
-    .insert({ 'contents': post })
+    .insert({ 'contents': post, 'date': date })
     .then(function () {
-      res.redirect('/');
+      res.redirect('back');
     })
     .catch(function (err) {
       console.error(err);
-      res.render('index', {
-        title: 'Leaf',
-        userId: userId,
-        posts: results,
-        isAuth: isAuth,
-      })
-    })
-});
-
-router.post('/', function (req, res, next) {
-  const isAuth = req.isAuthenticated();
-  const userId = req.user.id;
-  const labId = req.user.lab_id;
-  const post = req.body.add;
-
-  knex('posts')
-    .insert({ 'user_id': userId, 'lab_id': labId, 'contents': post })
-    .then(function () {
-      res.redirect('/');
-    })
-    .catch(function (err) {
-      console.error(err);
-      res.render('index', {
-        title: 'Leaf',
-        userId: userId,
-        posts: results,
-        isAuth: isAuth,
-      })
+      res.render('index', render.getRenderData(isAuth, 'index'));
     })
 });
 
