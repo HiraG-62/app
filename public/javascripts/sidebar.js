@@ -1,11 +1,9 @@
-let subIndex = 0;
-
-let mainThread = document.getElementById('main_thread_name').innerHTML;
+let mainThread = document.getElementById('main_thread_name').value;
 
 let selectedMain = document.getElementById(`check_${mainThread}`);
 selectedMain.checked = true;
 
-let subThreadIndex = document.getElementById('sub_thread_id').innerHTML;
+let subThreadIndex = document.getElementById('sub_thread_index').value;
 
 let selectedSub = document.getElementById(`check_${subThreadIndex}`);
 selectedSub.checked = true;
@@ -18,9 +16,9 @@ for (let i = 0; i < subThreadRadio.length; ++i) {
 }
 
 let header = document.getElementById('header_content')
-
+let subIndex = document.getElementById('sub_thread_index')
 
 function radioChanged() {
-    subIndex = this.index;
     header.innerHTML = this.thread.value;
+    subIndex.value = this.index;
 }

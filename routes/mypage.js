@@ -10,7 +10,7 @@ router.get('/', function (req, res, next) {
 
       knex('sub_threads')
         .select('*')
-        .where({ user_id: userId })
+        .where({ user_id: userId, main_thread_id: 2 })
         .then(function (subThreadsResults) {
           knex('posts')
             .select('*')
@@ -19,12 +19,15 @@ router.get('/', function (req, res, next) {
                 title: 'マイページ',
                 isAuth: isAuth,
                 mainThread: 'mypage',
+                mainThreadId: 2,
                 subThreads: subThreadsResults,
                 subThreadIndex: 0,
                 posts: postsResults
               })
             })
         })
+    } else {
+      res.redirect('/');
     }
   });
 

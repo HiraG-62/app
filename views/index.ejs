@@ -78,7 +78,7 @@
                                     <a href=".<%=urls[index]%>"></a>
                                     <% } } catch(err) {} %>
         
-                                        <input type="radio" name="sub" id="check_<%=index%>" value="<%=s.name%>" class="check_sub_thread" style="display: none;">
+                                <input type="radio" name="sub" id="check_<%=index%>" value="<%=s.name%>" class="check_sub_thread" style="display: none;">
                             </div>
                         </div>
                     </label>
@@ -136,11 +136,12 @@
                                 </div>
                             </div>
                         </div>
+                        <input type="text" id="main_thread_name" name="main_thread_name" value="<%=mainThread%>" style="display: none;">
+                        <input type="text" id="main_thread_id" name="main_thread_id" value="<%=mainThreadId%>" style="display: none;">
+                        <input type="text" id="sub_thread_index" name="sub_thread_index" value="<%=subThreadIndex%>" style="display: none;">
                     </form>
                 </div>
             </div>
-            <div style="display: none;" id="main_thread_name"><%=mainThread%></div>     <!--改行しない-->
-            <div style="display: none;" id="sub_thread_id"><%=subThreadIndex%></div>    <!--改行しない-->
         </div>
         <% } else { %>
             <% } %>
