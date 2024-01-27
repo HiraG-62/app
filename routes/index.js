@@ -28,12 +28,8 @@ router.get('/', function (req, res, next) {
 router.post('/content', function (req, res, next) {
   const isAuth = req.isAuthenticated();
   const post = req.body.contents;
-  const subThreadIndex = req.body.sub_thread_index
   const date = new Date().toLocaleString('sv').replace(/-/g, '/').slice(0, -3);
 
-  // knex('sub_threads')
-  //   .select('*')
-  //   .where({ 'user_id': userId})
   knex('posts')
     .insert({ 'contents': post, 'date': date })
     .then(function () {

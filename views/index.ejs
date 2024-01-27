@@ -104,6 +104,7 @@
             </div>
             <div class="main_body">
                 <div id="post_area">
+                    <%=subThreads[subThreadIndex].id%>
                     <% for(post of posts) { %>
                         <li class="post">
                             <div class="post_data">
@@ -120,26 +121,30 @@
                         </li>
                         <% } %>
                     </div>
-                    <form action="/content" method="post" name="post">
-                        <div class="form_area">
-                            <div class="writing_quill_area">
-                                <textarea name="contents" style="display:none" id="contents"></textarea>
-                                <div id="editor"></div>
-                            </div>
-                            <div class="buttons">
-                                <div class="toolbar_switch">
-                                    <img src="../public/images/toolbar.svg" class="toolbar_button button-icon icon">
+                    <% if(mainThreadId == 1) { %>
+                        <form action="/content" method="post" name="post">
+                    <% } else if(mainThreadId == 2) { %>
+                        <form action="/mypage" method="post" name="post">
+                    <% } %>
+                            <div class="form_area">
+                                <div class="writing_quill_area">
+                                    <textarea name="contents" style="display:none" id="contents"></textarea>
+                                    <div id="editor"></div>
                                 </div>
-                                <div class="enter_area">
-                                    <img src="../public/images/post.svg" alt="送信" class="enter_button button-icon icon">
-                                    <button type="button" onclick="clickSubmit()"></button>
+                                <div class="buttons">
+                                    <div class="toolbar_switch">
+                                        <img src="../public/images/toolbar.svg" class="toolbar_button button-icon icon">
+                                    </div>
+                                    <div class="enter_area">
+                                        <img src="../public/images/post.svg" alt="送信" class="enter_button button-icon icon">
+                                        <button type="button" onclick="clickSubmit()"></button>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <input type="text" id="main_thread_name" name="main_thread_name" value="<%=mainThread%>" style="display: none;">
-                        <input type="text" id="main_thread_id" name="main_thread_id" value="<%=mainThreadId%>" style="display: none;">
-                        <input type="text" id="sub_thread_index" name="sub_thread_index" value="<%=subThreadIndex%>" style="display: none;">
-                    </form>
+                            <input type="text" id="main_thread_name" name="main_thread_name" value="<%=mainThread%>" style="display: none;">
+                            <input type="text" id="main_thread_id" name="main_thread_id" value="<%=mainThreadId%>" style="display: none;">
+                            <input type="text" id="sub_thread_index" name="sub_thread_index" value="<%=subThreadIndex%>" style="display: none;">
+                        </form>
                 </div>
             </div>
         </div>
@@ -148,6 +153,7 @@
   
 </body>
 
+<script src="../public/javascripts/main.js"></script>
 <script src="../public/javascripts/sidebar.js"></script>
 <script src="https://cdn.quilljs.com/1.3.7/quill.js"></script>
 <script src="https://cdn.quilljs.com/1.3.7/quill.min.js"></script>

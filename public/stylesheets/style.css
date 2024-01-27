@@ -273,12 +273,14 @@ a {
   width: 100%;
   max-height: 85vh;
   overflow-y: auto;
+  position: relative;
 }
 
 
 .post {
   width: fit-content;
   min-width: 20%;
+  box-sizing: border-box;
 }
 
 .post_data {
